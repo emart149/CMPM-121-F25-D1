@@ -1,7 +1,21 @@
-import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
+//import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
+let counter = 0;
+
 document.body.innerHTML = `
-  <p>Example img: <img src="${exampleIconUrl}" class="icon" /></p>
-  <button class="favorite styled" type="button">THROW 🍅</button>
+  <button id="increment">THROW 🍅</button>
 `;
+//<p>Example img: <img src="${exampleIconUrl}" class="icon" /></p>
+//<p>Tomatoes Thrown: <span id="counter">0</span></p>
+
+const button = document.getElementById("increment")!;
+const counterElement = document.createElement("div");
+counterElement.textContent = "0 Tomatoes Thrown";
+document.body.appendChild(counterElement);
+
+button.addEventListener("click", () => {
+  counter += 1;
+  counterElement.textContent = `${counter} Tomatoes Thrown`;
+  //console.log("I have these thingies:", button, counterElement, counter);
+});
