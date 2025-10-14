@@ -19,3 +19,11 @@ button.addEventListener("click", () => {
   counterElement.textContent = `${counter} Tomatoes Thrown`;
   //console.log("I have these thingies:", button, counterElement, counter);
 });
+
+// deno-lint-ignore no-unused-vars
+const audienceInterval = setInterval(audienceMember, 1000);
+
+function audienceMember() {
+  counter++;
+  counterElement.textContent = `${counter} Tomatoes Thrown`;
+}
