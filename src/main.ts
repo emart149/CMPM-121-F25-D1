@@ -4,7 +4,6 @@ import "./style.css";
 
 const counter = 0;
 let decimalCounter = 0;
-let decimalCounterStr: string = "0";
 let multiplier: number = 0;
 let multiplierStr: string = "0";
 let upgradeOneActive = false;
@@ -59,8 +58,7 @@ upgradeThreeButton.innerHTML =
 
 button.addEventListener("click", () => {
   decimalCounter += 1;
-  decimalCounterStr = decimalCounter.toFixed(2);
-  counterElement.textContent = `${decimalCounterStr} Tomatoes Thrown`;
+  counterElement.textContent = `${decimalCounter.toFixed(2)} Tomatoes Thrown`;
   if (decimalCounter > 9) {
     upgradeOneButton.disabled = false;
   }
@@ -76,20 +74,21 @@ let deltaTime: number = performance.now();
 let lastTime: number = 0;
 
 function increaseCounter(clock: number) {
-  if (decimalCounter < 10) {
+  if (decimalCounter < upgradeOneCost) {
     upgradeOneButton.disabled = true;
   } else {
     upgradeOneButton.disabled = false;
   }
-  if (decimalCounter < 100) {
+  if (decimalCounter < upgradeTwoCost) {
     upgradeTwoButton.disabled = true;
   } else {
     upgradeTwoButton.disabled = false;
   }
-  if (decimalCounter < 1000) {
+  if (decimalCounter < upgradeThreeCost) {
     upgradeThreeButton.disabled = true;
   } else {
     upgradeThreeButton.disabled = false;
+    100;
   }
   //console.log("decCtr: " + decimalCounter);
   deltaTime = clock - lastTime;
@@ -101,8 +100,7 @@ function increaseCounter(clock: number) {
 
   decimalCounter += (deltaTime / 1000) * multiplier;
 
-  decimalCounterStr = decimalCounter.toFixed(2);
-  counterElement.textContent = `${decimalCounterStr} Tomatoes Thrown`;
+  counterElement.textContent = `${decimalCounter.toFixed(2)} Tomatoes Thrown`;
   console.log("decCtrafter: " + decimalCounter);
 
   requestAnimationFrame(increaseCounter);
@@ -110,10 +108,12 @@ function increaseCounter(clock: number) {
 
 upgradeOneButton.addEventListener("click", () => {
   decimalCounter -= 10;
+  upgradeOneCost = upgradeOneCost * 1.15;
   upgradeOneCount++;
-  upgradeOneButton.innerHTML =
-    `Upgrade One: ${upgradeOneCount} <br>  cost: ${upgradeOneCost} 🍅 `;
   multiplier += 0.1;
+  upgradeOneButton.innerHTML = `Upgrade One: ${upgradeOneCount} <br>  cost: ${
+    upgradeOneCost.toFixed(2)
+  } 🍅 `;
   multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
   if (!upgradeOneActive) {
     lastTime = performance.now();
@@ -124,11 +124,13 @@ upgradeOneButton.addEventListener("click", () => {
 });
 
 upgradeTwoButton.addEventListener("click", () => {
-  decimalCounter -= 100;
+  decimalCounter -= upgradeTwoCost;
+  upgradeTwoCost = upgradeTwoCost * 1.15;
   multiplier += 2;
   upgradeTwoCount++;
-  upgradeTwoButton.innerHTML =
-    `Upgrade Two: ${upgradeTwoCount} <br>  cost: ${upgradeTwoCost} 🍅 `;
+  upgradeTwoButton.innerHTML = `Upgrade Two: ${upgradeTwoCount} <br>  cost: ${
+    upgradeTwoCost.toFixed(2)
+  } 🍅 `;
   multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
 
   if (!upgradeTwoActive) {
@@ -140,11 +142,14 @@ upgradeTwoButton.addEventListener("click", () => {
 });
 
 upgradeThreeButton.addEventListener("click", () => {
-  decimalCounter -= 1000;
+  decimalCounter -= upgradeThreeCost;
+  upgradeThreeCost = upgradeThreeCost * 1.15;
   multiplier += 50;
   upgradeThreeCount++;
   upgradeThreeButton.innerHTML =
-    `Upgrade Three: ${upgradeThreeCount} <br>  cost: ${upgradeThreeCost} 🍅 `;
+    `Upgrade Three: ${upgradeThreeCount} <br>  cost: ${
+      upgradeThreeCost.toFixed(2)
+    } 🍅 `;
 
   multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
 
@@ -161,5 +166,5 @@ requestAnimationFrame(increaseCounter);
 const audienceInterval = setInterval(displayCounter, 10);
 
 function displayCounter() {
-  counterElement.textContent = `${decimalCounterStr} Tomatoes Thrown`;
+  counterElement.textContent = `${decimalCounter.toFixed(2)} Tomatoes Thrown`;
 }
