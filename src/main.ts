@@ -9,7 +9,7 @@ const canvas = document.getElementById("canvas")!;
 const centerX = globalThis.innerWidth / 2;
 const centerY = globalThis.innerHeight / 2;
 
-let decimalCounter = 999999;
+let decimalCounter = 0;
 let multiplier: number = 0;
 let multiplierStr: string = "0";
 
