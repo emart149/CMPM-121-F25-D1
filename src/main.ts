@@ -79,6 +79,43 @@ const availableItems: Item[] = [
   },
 ];
 
+//----Initializing Text Elements & tomato Icon----
+const button = document.getElementById("increment")!;
+button.style.backgroundImage = `url(${tomatoEmoji})`;
+button.style.backgroundSize = "contain";
+button.style.backgroundRepeat = "no-repeat";
+button.style.backgroundPosition = "center";
+button.style.backgroundColor = "transparent";
+button.style.position = "absolute";
+button.style.top = "250px";
+button.style.left = "550px";
+button.style.border = "none";
+button.style.padding = "0";
+button.style.width = "200px";
+button.style.height = "100px";
+
+const directions = document.createElement("div");
+directions.textContent = "Click Tomato to throw!";
+directions.style.position = "absolute";
+directions.style.top = `${centerY - 100}px`;
+directions.style.left = `${centerX - 70}px`;
+
+const counterElement = document.createElement("div");
+counterElement.textContent = "0 Tomatoes Thrown";
+counterElement.style.position = "absolute";
+counterElement.style.top = `${centerY + 75}px`;
+counterElement.style.left = `${centerX - 70}px`;
+
+const multiplierElement = document.createElement("div");
+multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
+multiplierElement.style.position = "absolute";
+multiplierElement.style.top = `${centerY + 100}px`;
+multiplierElement.style.left = `${centerX - 90}px`;
+
+button.addEventListener("click", () => {
+  decimalCounter += 1;
+});
+
 //-----Implementing Events for when each upgrade Button is Clicked----
 for (const curItem of availableItems) {
   curItem.element.innerHTML = `${curItem.name} ${curItem.count.toFixed(0)}      
@@ -105,46 +142,6 @@ for (const curItem of availableItems) {
   };
 }
 
-//----Setting up Text Elements & tomato Icon----
-const directions = document.createElement("div");
-directions.textContent = "Click Tomato to throw!";
-directions.style.position = "absolute";
-directions.style.top = `${centerY - 100}px`;
-directions.style.left = `${centerX - 70}px`;
-document.body.appendChild(directions);
-
-const button = document.getElementById("increment")!;
-button.style.backgroundImage = `url(${tomatoEmoji})`;
-button.style.backgroundSize = "contain";
-button.style.backgroundRepeat = "no-repeat";
-button.style.backgroundPosition = "center";
-button.style.backgroundColor = "transparent";
-button.style.position = "absolute";
-button.style.top = "250px";
-button.style.left = "550px";
-button.style.border = "none";
-button.style.padding = "0";
-button.style.width = "200px";
-button.style.height = "100px";
-
-const counterElement = document.createElement("div");
-counterElement.textContent = "0 Tomatoes Thrown";
-counterElement.style.position = "absolute";
-counterElement.style.top = `${centerY + 75}px`;
-counterElement.style.left = `${centerX - 70}px`;
-document.body.appendChild(counterElement);
-
-const multiplierElement = document.createElement("div");
-multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
-multiplierElement.style.position = "absolute";
-multiplierElement.style.top = `${centerY + 100}px`;
-multiplierElement.style.left = `${centerX - 90}px`;
-document.body.appendChild(multiplierElement);
-
-button.addEventListener("click", () => {
-  decimalCounter += 1;
-});
-
 //----Function that is called every frame(Update Function)----
 function increaseCounter(clock: number) {
   for (let thisItem of availableItems) {
@@ -165,3 +162,8 @@ function increaseCounter(clock: number) {
 }
 
 requestAnimationFrame(increaseCounter);
+
+//----Appending Text Elements----
+document.body.appendChild(directions);
+document.body.appendChild(counterElement);
+document.body.appendChild(multiplierElement);
