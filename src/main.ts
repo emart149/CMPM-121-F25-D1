@@ -1,17 +1,15 @@
 // Program that makes an incremental style game in which the theme is based off of rottein tomatoes
 //which are used to rate media by Elijah Martiniano 10/20/25.
 
-// deno-lint-ignore-file no-unused-vars prefer-const
+// deno-lint-ignore-file prefer-const
 import tomatoEmoji from "./Tomato-Emoji.png";
 import "./style.css";
 
-const canvas = document.getElementById("canvas")!;
 const centerX = globalThis.innerWidth / 2;
 const centerY = globalThis.innerHeight / 2;
 
 let decimalCounter = 0;
 let multiplier: number = 0;
-let multiplierStr: string = "0";
 
 document.body.innerHTML = `
   <button id="increment"></button>
@@ -151,26 +149,14 @@ function increaseCounter(clock: number) {
       thisItem.element.disabled = false;
     }
   }
-  //console.log("decCtr: " + availableItems[0].name);
   deltaTime = clock - lastTime;
-  //  console.log(": " + );
-  //console.log("clock: " + clock);
-  //console.log("lastTime: " + lastTime);
   lastTime = performance.now();
-  //console.log("decCounterBef: " + decimalCounter);
 
   decimalCounter += (deltaTime / 1000) * multiplier;
 
   counterElement.textContent = `${decimalCounter.toFixed(2)} Tomatoes Thrown`;
-  //console.log("decCtrafter: " + decimalCounter);
 
   requestAnimationFrame(increaseCounter);
 }
 
 requestAnimationFrame(increaseCounter);
-
-const audienceInterval = setInterval(displayCounter, 10);
-
-function displayCounter() {
-  counterElement.textContent = `${decimalCounter.toFixed(2)} Tomatoes Thrown`;
-}
