@@ -2,11 +2,16 @@
 //which are used to rate media by Elijah Martiniano 10/20/25.
 
 // deno-lint-ignore-file prefer-const
+
+//----Initiating Variables and Upgrade Objects/Buttons----
 import tomatoEmoji from "./Tomato-Emoji.png";
 import "./style.css";
 
 const centerX = globalThis.innerWidth / 2;
 const centerY = globalThis.innerHeight / 2;
+
+let deltaTime: number = performance.now();
+let lastTime: number = 0;
 
 let decimalCounter = 0;
 let multiplier: number = 0;
@@ -74,6 +79,7 @@ const availableItems: Item[] = [
   },
 ];
 
+//-----Implementing Events for when each upgrade Button is Clicked----
 for (const curItem of availableItems) {
   curItem.element.innerHTML = `${curItem.name} ${curItem.count.toFixed(0)}      
   <br>  ${curItem.description} 
@@ -99,6 +105,7 @@ for (const curItem of availableItems) {
   };
 }
 
+//----Setting up Text Elements & tomato Icon----
 const directions = document.createElement("div");
 directions.textContent = "Click Tomato to throw!";
 directions.style.position = "absolute";
@@ -106,10 +113,6 @@ directions.style.top = `${centerY - 100}px`;
 directions.style.left = `${centerX - 70}px`;
 document.body.appendChild(directions);
 
-const counterElement = document.createElement("div");
-counterElement.textContent = "0 Tomatoes Thrown";
-const multiplierElement = document.createElement("div");
-multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
 const button = document.getElementById("increment")!;
 button.style.backgroundImage = `url(${tomatoEmoji})`;
 button.style.backgroundSize = "contain";
@@ -124,11 +127,15 @@ button.style.padding = "0";
 button.style.width = "200px";
 button.style.height = "100px";
 
+const counterElement = document.createElement("div");
+counterElement.textContent = "0 Tomatoes Thrown";
 counterElement.style.position = "absolute";
 counterElement.style.top = `${centerY + 75}px`;
 counterElement.style.left = `${centerX - 70}px`;
 document.body.appendChild(counterElement);
 
+const multiplierElement = document.createElement("div");
+multiplierElement.textContent = `Tomato Throwing Rate: ${multiplier} 🍅/sec `;
 multiplierElement.style.position = "absolute";
 multiplierElement.style.top = `${centerY + 100}px`;
 multiplierElement.style.left = `${centerX - 90}px`;
@@ -138,9 +145,7 @@ button.addEventListener("click", () => {
   decimalCounter += 1;
 });
 
-let deltaTime: number = performance.now();
-let lastTime: number = 0;
-
+//----Function that is called every frame(Update Function)----
 function increaseCounter(clock: number) {
   for (let thisItem of availableItems) {
     if (decimalCounter < thisItem.cost) {
