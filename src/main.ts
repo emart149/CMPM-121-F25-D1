@@ -4,7 +4,6 @@
 // deno-lint-ignore-file prefer-const
 
 //----Initiating Variables and Upgrade Objects/Buttons----
-const canvas = document.getElementById("canvas")!;
 import tomatoEmoji from "./Tomato-Emoji.png";
 import "./style.css";
 
