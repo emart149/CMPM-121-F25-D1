@@ -1,3 +1,5 @@
 # CMPM 121 D1 Project
 
-This is the starting point for your CMPM 121 D1 project. The goal of this project is to create a simple web application using TypeScript, Vite, and modern web development practices. Students should make sure to remove _this_ content from their README.md file and replace it with their own project documentation.
+First UI change that I made was making the buttons aligned vertically on the right side which was inspired by <https://github.com/fractalizes/cmpm-121-f25-d1>
+
+Second UI change was inspired by <https://github.com/UriosteguiM12/cmpm-121-f25-d1> in which they implemented random falling pizzas on the side but for my game I thought it more fitting to have a tomato thrown every time you click the tomato in the center.

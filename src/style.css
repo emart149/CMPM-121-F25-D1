@@ -7,3 +7,19 @@
 body {
   text-align: center;
 }
+
+/*making buttons aligned to vertical column on the right side inspired by https://github.com/fractalizes/cmpm-121-f25-d1 */
+.flex-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 20px 0;
+  box-sizing: border-box;
+  z-index: 1000;
+  background: transparent;
+}

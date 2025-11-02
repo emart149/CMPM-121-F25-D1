@@ -4,6 +4,7 @@
 // deno-lint-ignore-file prefer-const
 
 //----Initiating Variables and Upgrade Objects/Buttons----
+const canvas = document.getElementById("canvas")!;
 import tomatoEmoji from "./Tomato-Emoji.png";
 import "./style.css";
 
@@ -80,6 +81,9 @@ const availableItems: Item[] = [
 ];
 
 //----Initializing Text Elements & tomato Icon----
+const container = document.createElement("div");
+container.className = "flex-right";
+
 const button = document.getElementById("increment")!;
 button.style.backgroundImage = `url(${tomatoEmoji})`;
 button.style.backgroundSize = "contain";
@@ -112,14 +116,43 @@ multiplierElement.style.position = "absolute";
 multiplierElement.style.top = `${centerY + 100}px`;
 multiplierElement.style.left = `${centerX - 90}px`;
 
+//implmentation of throwing tomatoes inspired by https://github.com/UriosteguiM12/cmpm-121-f25-d1
 button.addEventListener("click", () => {
   decimalCounter += 1;
+  const thrownTomato = document.createElement("img");
+  thrownTomato.src = tomatoEmoji;
+
+  thrownTomato.style.position = "fixed";
+  thrownTomato.style.left = getRandomInt(globalThis.innerWidth) + "px";
+  thrownTomato.style.bottom = "0px"; // start at bottom
+  thrownTomato.style.width = "45px";
+  thrownTomato.style.height = "45px";
+  thrownTomato.style.transform = "translateX(-50%)"; // center it horizontally
+
+  const throwSpeed = 7;
+  let tomatoPosition: number = 0;
+  const endPoint = globalThis.innerHeight;
+
+  function throwTomato() {
+    tomatoPosition += throwSpeed;
+    thrownTomato.style.bottom = tomatoPosition + "px";
+    if (tomatoPosition < endPoint) {
+      requestAnimationFrame(throwTomato);
+    } else {
+      thrownTomato.remove();
+    }
+  }
+
+  requestAnimationFrame(throwTomato);
+  document.body.appendChild(thrownTomato);
 });
 
 //-----Implementing Events for when each upgrade Button is Clicked----
 for (const curItem of availableItems) {
-  curItem.element.innerHTML = `${curItem.name} ${curItem.count.toFixed(0)}      
-  <br>  ${curItem.description} 
+  //making buttons aligned to vertical column on the right side inspired by https://github.com/fractalizes/cmpm-121-f25-d1
+  container.appendChild(curItem.element);
+  curItem.element.innerHTML = `${curItem.name} ${curItem.count.toFixed(0)}
+  <br>  ${curItem.description}
   <br>  cost:${curItem.cost.toFixed(2)} 🍅 `;
 
   curItem.element.disabled = true;
@@ -130,10 +163,8 @@ for (const curItem of availableItems) {
     curItem.count++;
     multiplier += curItem.rate;
 
-    curItem.element.innerHTML = `${curItem.name} ${
-      curItem.count.toFixed(0)
-    }      
-    <br>  ${curItem.description} 
+    curItem.element.innerHTML = `${curItem.name} ${curItem.count.toFixed(0)}
+    <br>  ${curItem.description}
     <br>  cost:${curItem.cost.toFixed(2)} 🍅 `;
 
     multiplierElement.textContent = `Tomato Throwing Rate: ${
@@ -161,9 +192,14 @@ function increaseCounter(clock: number) {
   requestAnimationFrame(increaseCounter);
 }
 
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 requestAnimationFrame(increaseCounter);
 
 //----Appending Text Elements----
 document.body.appendChild(directions);
 document.body.appendChild(counterElement);
 document.body.appendChild(multiplierElement);
+document.body.appendChild(container);
